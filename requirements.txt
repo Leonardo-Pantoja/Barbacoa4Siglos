@@ -12,6 +12,6 @@ sqlparse==0.4.3
 tomli==2.0.1
 gunicorn==21.2.0
 django-allauth==0.58.2
-gevent==22.1.2
+gevent==22.8.0
 eventlet==0.33.3
 pywin32==306
