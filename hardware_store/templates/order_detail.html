@@ -1,0 +1,10 @@
+{% extends "main.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h1>Order Details</h1>
+  <p>Order ID: {{ order.id }}</p>
+  <p>Order Date: {{ order.order_date }}</p>
+  <!-- Otros detalles de la orden... -->
+{% endblock %}

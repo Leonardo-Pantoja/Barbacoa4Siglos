@@ -1,0 +1,61 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<main class="mt-5 pt-4">
+    <div class="container">
+        <h2 class="mb-4 text-center">Mis Pedidos</h2>
+
+        {% for pedido in pedidos %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h6>Detalles del Pedido:</h6>
+                    <ul>
+                        {% for detalle in pedido.cartitem_set.all %}
+                            <li>{{ detalle.product.name }} - Cantidad: {{ detalle.quantity }} - Precio: ${{ detalle.subtotal|floatformat:2 }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p>Total del Pedido: ${{ pedido.total_carrito|floatformat:2 }}</p>
+                    <p>Hora de Recogida: {{ pedido.pickup_time|default:"No especificada" }}</p>
+                    <p>Estado: {{ pedido.get_status_display }}</p>
+                    <!-- Barra de progreso aquí -->
+                    <div class="progress">
+                        <div id="progress-bar-{{ pedido.id }}" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        {% for pedido in pedidos %}
+            updateProgressBar({{ pedido.id }}, '{{ pedido.status }}');
+        {% endfor %}
+    });
+
+    function updateProgressBar(pedidoId, status) {
+        var progressBar = $('#progress-bar-' + pedidoId);
+
+        // Asigna el porcentaje según el estado del pedido
+        switch (status) {
+            case 'PENDIENTE':
+                progressBar.css('width', '0%');
+                break;
+            case 'EN_PROCESO':
+                progressBar.css('width', '50%');
+                break;
+            case 'ENTREGADA':
+                progressBar.css('width', '100%');
+                break;
+            default:
+                break;
+        }
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+#main-container {
+    margin: 100%;
+}
+
+.btn-red {
+    background-color: #FF0000;
+    border-color: #FF0000;
+    color: #FFFFFF;  
+}
+
+.btn-red:hover {
+    background-color: #c71616;
+    border-color: #c71616;
+    color: #ffffffec;  
+}

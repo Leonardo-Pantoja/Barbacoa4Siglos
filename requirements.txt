@@ -1,0 +1,12 @@
+asgiref==3.6.0
+autopep8==2.0.2
+beautifulsoup4==4.12.2
+crispy-bootstrap4==2022.1
+Django==4.1.7
+django-crispy-forms==2.0
+djangorestframework==3.14.0
+pycodestyle==2.10.0
+pytz==2023.3
+soupsieve==2.4
+sqlparse==0.4.3
+tomli==2.0.1

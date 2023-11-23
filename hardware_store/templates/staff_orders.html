@@ -1,0 +1,91 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<main class="mt-5 pt-4">
+    <div class="container">
+        <h2 class="mb-4 text-center">Órdenes de los clientes</h2>
+
+        <!-- Terminar de implementar paginacion y cierre de pedidos -->
+
+        {% for pedido in pedidos %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="close" aria-label="Close" data-toggle="tooltip" data-placement="top" title="Borrar Pedido">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <h6 class="form-label">Detalles del Pedido:</h6>
+                    <ul>
+                        {% for detalle in pedido.cartitem_set.all %}
+                            <li>{{ detalle.product.name }} - Cantidad: {{ detalle.quantity }} - Precio: ${{ detalle.subtotal|floatformat:2 }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="form-label">Total del Pedido: ${{ pedido.total_carrito|floatformat:2 }}</p>
+                    <p class="form-label">Hora de Entrega: {{ pedido.pickup_time|default:"No especificada" }}</p>
+                    <p class="form-label">Nombre del Cliente: {{ pedido.user.username|default:"No especificado" }}</p>
+                    <div class="d-flex justify-content-end">
+                        <form method="post" action="{% url 'accept_order' pedido.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i>Aceptar Orden</button>
+                        </form>
+                    
+                        <form method="post" action="{% url 'mark_as_delivered' pedido.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success"><i class="fas fa-check-double"></i>
+                                </i> Marcar como Entregada
+                            </button>
+                        </form>                        
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</main>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+
+        {% if pedidos.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="First">
+                    <i class="fa fa-angle-double-left"></i>
+                    <span class="sr-only">Primera</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ pedidos.previous_page_number }}" aria-label="Previous">
+                    <i class="fa fa-angle-left"></i>
+                    <span class="sr-only">Anterior</span>
+                </a>
+            </li>
+        {% endif %}
+
+        {% for num in pedidos.paginator.page_range %}
+            <li class="page-item {% if num == pedidos.number %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+
+        {% if pedidos.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ pedidos.next_page_number }}" aria-label="Next">
+                    <i class="fa fa-angle-right"></i>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ pedidos.paginator.num_pages }}" aria-label="Last">
+                    <i class="fa fa-angle-double-right"></i>
+                    <span class="sr-only">Última</span>
+                </a>
+            </li>
+        {% endif %}
+
+    </ul>
+</nav>
+
+{% endblock %}

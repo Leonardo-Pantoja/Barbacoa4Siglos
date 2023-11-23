@@ -1,0 +1,102 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<main class="mt-5 pt-4">
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="height: 90vh;">
+            <div class="col-md-10 col-lg-8">
+                <form class="card card-form p-4" method="post">
+                    {% csrf_token %}
+                    <h2 class="mb-4 text-center">Pedido</h2>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <i class="fas fa-user"></i>
+                            <label for="firstName" class="form-label">Nombre(s)</label>
+                            <input type="text" id="firstName" name="first_name" class="form-control" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras y espacios" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <i class="fas fa-users"></i>
+                            <label for="lastName" class="form-label">Apellido(s)</label>
+                            <input type="text" id="lastName" name="last_name" class="form-control" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo se permiten letras y espacios" required />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <label for="address" class="form-label">Dirección</label>
+                            <input type="text" id="address" name="address" class="form-control" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <label for="houseNumber" class="form-label">Número de Casa</label>
+                            <input type="text" id="houseNumber" name="housenumber"  class="form-control" />
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <i class="fas fa-phone"></i>
+                            <label for="phone" class="form-label">Número de teléfono</label>
+                            <input type="text" id="phone" name="phone" class="form-control" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"title="Solo se permiten números" required />
+                            <small>Format: 123-456-7890</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <i class="fas fa-clock"></i>
+                            <label for="time" class="form-label">Hora de recogida</label>
+                            <input type="time" id="time" name="pickup_time" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <p class="form-label">Total del Pedido: ${{ total_carrito|floatformat:2 }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <button id="submitBtn" class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#successModal" disabled>
+                                <i class="far fa-envelope"></i> Pedir
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Script que bloquea el botón de pedir hasta que se llene el formulario ... -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var submitBtn = document.getElementById('submitBtn');
+        var formInputs = document.querySelectorAll('#firstName, #lastName, #address, #phone, #time');
+
+        function updateSubmitButton() {
+            var isFormValid = true;
+            formInputs.forEach(function (input) {
+                if (!input.checkValidity()) {
+                    isFormValid = false;
+                }
+            });
+
+            submitBtn.disabled = !isFormValid;
+        }
+
+        formInputs.forEach(function (input) {
+            input.addEventListener('input', updateSubmitButton);
+        });
+
+        updateSubmitButton();
+    });
+</script>
+
+{% endblock %}

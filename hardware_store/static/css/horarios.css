@@ -1,0 +1,36 @@
+
+.container {
+    padding-top: 50px;
+  }
+  
+  .row {
+    margin-top: 20px;
+  }
+  
+  h3 {
+    color: #f27059;
+  }
+  
+  p {
+    font-size: 16px;
+  }
+
+
+.accordion-item {
+  background-color: #fff;
+}
+
+.accordion-button {
+  color: #35C9FF;
+}
+
+.accordion-body {
+  background-color: #F4C95D;
+}
+
+.accordion-body p {
+  color: #FFC000;
+}
+
+  
+  

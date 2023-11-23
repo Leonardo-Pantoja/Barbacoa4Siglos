@@ -1,0 +1,32 @@
+{% extends "main.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/create_cat.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+
+<!-- Corregir si se puede -->
+
+<div class="container mt-5 mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 style="color: black; text-align: center;">Añade un nuevo producto</h1>
+
+            <div class="card" style="background-color: #ffffff;">
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="text-center mt-3">
+                            <button type="submit" value="Submit" class="btn btn-delete">
+                                Crear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
