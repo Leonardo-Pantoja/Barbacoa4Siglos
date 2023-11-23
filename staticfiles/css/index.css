@@ -1,0 +1,67 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    background-image: url('../media/logo/barbacoa.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+.negro {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    font-size: 4vh;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contenedor {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.descrip {
+    width: 45%;
+    padding: 10px;
+}
+
+.div-imagen {
+    width: 100%;
+    max-width: 380px;
+    border: 3px solid #f27059;
+    overflow: hidden;
+    display: flex;
+}
+
+.div-imagen img {
+    width: 100%;
+    height: auto; 
+    object-fit: cover;
+}
+
+.ubicacion {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px 0;
+}
+
+#mapa {
+    width: 100%;
+    border: 3px solid #f25C54;
+}
+
+@media (max-width: 800px) {
+    .contenedor {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .descrip {
+        width: 95%; 
+    }
+
+}
