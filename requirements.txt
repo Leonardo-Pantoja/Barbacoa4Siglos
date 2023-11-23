@@ -2,7 +2,7 @@ asgiref==3.6.0
 autopep8==2.0.2
 beautifulsoup4==4.12.2
 crispy-bootstrap4==2022.1
-Django==3.2.x
+Django>=3.2,<4.0
 django-crispy-forms==2.0
 djangorestframework==3.14.0
 pycodestyle==2.10.0
